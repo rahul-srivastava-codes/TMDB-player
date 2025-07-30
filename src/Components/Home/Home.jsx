@@ -4,10 +4,13 @@ import Topnav from "../../Partials/Topnav";
 import instance from "../../utils/Axios";
 import Header from "../../Partials/Header";
 import HorizontalCards from "../../Partials/HorizontalCards";
+import Dropdown from "../../Partials/Dropdown";
 
 function Home() {
   document.title = "SCDB | Homepage";
   const [wallpaper, setWallpaper] = useState(null);
+  const [trending, settrending] = useState(null);
+  const [category, setcategory] = useState("all");
 
   const GetHeaderWallpaper = async () => {
     try {
@@ -20,16 +23,36 @@ function Home() {
       console.log(error);
     }
   };
+
+  const GetTrending = async () => {
+    try {
+      const { data } = await instance.get(`/trending/${category}/day`);
+
+      settrending(data.results);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     !wallpaper && GetHeaderWallpaper();
-  }, [wallpaper]);
-  return wallpaper ? (
+    GetTrending();
+  }, [wallpaper, trending, category]);
+  console.log(trending);
+  return wallpaper && trending ? (
     <>
       <Sidenav />
       <div className="w-[80%] h-full overflow-auto overflow-x-hidden">
         <Topnav />
         <Header data={wallpaper} />
-        <HorizontalCards />
+        <div className="flex justify-between p-10">
+          <h1 className="text-3xl font-semibold text-zinc-400">Trending</h1>
+          <Dropdown
+            title="Filter"
+            options={["tv", "movie", "all"]}
+            func={(e) => setcategory(e.target.value)}
+          />
+        </div>
+        <HorizontalCards data={trending} />
       </div>
     </>
   ) : (
