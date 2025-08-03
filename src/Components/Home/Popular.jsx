@@ -8,84 +8,83 @@ import Loading from "./Loading";
 import Cards from "./Partials/Cards";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-function Trending() {
+function Popular() {
+  document.title = "SCDB | Popular";
   const navigate = useNavigate();
-  const [category, setcategory] = useState("all");
-  document.title = "SCDB | Trending " + category.toUpperCase();
-  const [trending, settrending] = useState([]);
-  const [duration, setduration] = useState("day");
 
+  const [popular, setPopular] = useState([]);
+  const [category, setcategory] = useState("movie");
   const [page, setpage] = useState(1);
   const [hasMore, sethasMore] = useState(true);
+  const [error, setError] = useState(false); // Optional error flag
 
-  const GetTrending = async () => {
+  const GetPopular = async () => {
     try {
-      const { data } = await instance.get(
-        `/trending/${category}/${duration}?page=${page}`
-      );
-      if (data.results.length > 0) {
-        settrending((prevstate) => [...prevstate, ...data.results]);
+      const url = `${category}/popular?page=${page}`; // ✅ fixed URL
+      console.log("Fetching:", url); // helpful debug
+      const { data } = await instance.get(url);
+
+      if (data.results && data.results.length > 0) {
+        setPopular((prevstate) => [...prevstate, ...data.results]);
         setpage(page + 1);
       } else {
         sethasMore(false);
       }
-      // settrending(data.results);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching data:", error);
+      setError(true); // show error message optionally
     }
   };
+
   const refreshHandler = () => {
-    if (trending.length === 0) {
-      GetTrending();
-    } else {
-      setpage(1);
-      settrending([]);
-      GetTrending();
-    }
+    setpage(1);
+    setPopular([]);
+    sethasMore(true);
+    GetPopular();
   };
+
   useEffect(() => {
     refreshHandler();
-  }, [category, duration]);
+  }, [category]);
 
-  return trending.length > 0 ? (
+  if (error) {
+    return (
+      <div className="text-red-500 text-center mt-5">
+        Something went wrong fetching data.
+      </div>
+    );
+  }
+
+  return popular.length > 0 ? (
     <div className="w-screen h-screen">
-      <div className=" px-[5%] w-full   flex items-center justify-between gap-5 ">
-        <h1 className="text-2xl text-zinc-400 font-semibold ">
-          {" "}
+      <div className=" px-[5%] w-full flex items-center justify-between gap-5">
+        <h1 className="text-2xl text-zinc-400 font-semibold">
           <i
             onClick={() => navigate(-1)}
-            className="bg-amber-300"
-            class="ri-arrow-left-line hover:text-[#6556CD] hover:cursor-pointer"
+            className="ri-arrow-left-line hover:text-[#6556CD] hover:cursor-pointer"
           ></i>
-          Trending
+          Popular
         </h1>
         <div className="flex items-center w-[80%] gap-2">
           <Top_nav />
           <Dropdown
             title="Category"
-            options={["tv", "movie", "all"]}
+            options={["movie", "tv"]}
             func={(e) => setcategory(e.target.value)}
-          />
-          <div className="w-[2%]"></div>
-          <Dropdown
-            title="Duration"
-            options={["week", "day"]}
-            func={(e) => setduration(e.target.value)}
           />
         </div>
       </div>
+
       <InfiniteScroll
-        dataLength={trending.length} //This is important field to render the next data
-        next={GetTrending}
+        dataLength={popular.length}
+        next={GetPopular}
         hasMore={hasMore}
-        loader={<h4>Loading...</h4>}
+        loader={<h4 className="text-center text-zinc-400">Loading...</h4>}
         endMessage={
           <p style={{ textAlign: "center" }}>
             <b>Yay! You have seen it all</b>
           </p>
         }
-        // below props only if you need pull down functionality
-
         pullDownToRefreshThreshold={50}
         pullDownToRefreshContent={
           <h3
@@ -99,7 +98,7 @@ function Trending() {
           <h3 style={{ textAlign: "center" }}>&#8593; Release to refresh</h3>
         }
       >
-        <Cards data={trending} title={category}></Cards>
+        <Cards data={popular} title={category} />
       </InfiniteScroll>
     </div>
   ) : (
@@ -107,4 +106,4 @@ function Trending() {
   );
 }
 
-export default Trending;
+export default Popular;
