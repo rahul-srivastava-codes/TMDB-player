@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import Sidenav from "../../Partials/Sidenav";
-import Topnav from "../../Partials/Topnav";
+import Sidenav from "./Partials/Sidenav";
+import Topnav from "./Partials/Topnav";
 import instance from "../../utils/Axios";
-import Header from "../../Partials/Header";
-import HorizontalCards from "../../Partials/HorizontalCards";
-import Dropdown from "../../Partials/Dropdown";
+import Header from "./Partials/Header";
+import HorizontalCards from "./Partials/HorizontalCards";
+import Dropdown from "./Partials/Dropdown";
+import Loading from "./Loading";
 
 function Home() {
   document.title = "SCDB | Homepage";
@@ -56,7 +57,9 @@ function Home() {
       </div>
     </>
   ) : (
-    <h1>Loading</h1>
+    <h1>
+      <Loading></Loading>
+    </h1>
   );
 }
 

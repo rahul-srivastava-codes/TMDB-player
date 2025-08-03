@@ -14,7 +14,10 @@ function Sidenav() {
         <h1 className="text-white font-semibold text-xl mt-10 mb-5">
           New Feeds
         </h1>
-        <Link className="hover:bg-[#6556CD] hover:text-white p-3 rounded-lg duration-300 hover:scale-110 text-base">
+        <Link
+          to={"/trending"}
+          className="hover:bg-[#6556CD] hover:text-white p-3 rounded-lg duration-300 hover:scale-110 text-base"
+        >
           <i class="text-white mr-2 ri-fire-fill"></i> Trending
         </Link>
         <Link className="hover:bg-[#6556CD] hover:text-white p-3 rounded-lg duration-300 hover:scale-110 text-base">

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import instance from "../utils/Axios";
+import instance from "../../../utils/Axios";
 function Top_bar() {
   const [query, setQuery] = useState("");
   const [searches, setSearches] = useState([]);
