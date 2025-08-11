@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-// import no img from ....
+
 function HorizontalCards({ data }) {
   return (
     <div className="w-[100%] overflow-y-hidden flex mb-5 p-5">
@@ -12,13 +12,9 @@ function HorizontalCards({ data }) {
           >
             <img
               className="w-full h-[45%] object-cover"
-              src={
+              src={`https://image.tmdb.org/t/p/original/${
                 d.backdrop_path || d.poster_path
-                  ? `https://image.tmdb.org/t/p/original/${
-                      d.backdrop_path || d.poster_path
-                    }`
-                  : "no image"
-              }
+              }`}
               alt=""
             />
             <div className="text-white p-3 h-[45%] overflow-y-auto">

@@ -3,14 +3,21 @@ import { Link } from "react-router-dom";
 function Cards({ data, title }) {
   return (
     <div className=" flex flex-wrap w-full h-full px-[5%] bg-[#1F1E24]">
-      {console.log(data)}
       {data.map((c, i) => (
-        <Link key={i} className="w-[25vh] mr-[5%] relative mb-[5%]">
+        <Link
+          key={i}
+          to={`/${c.media_type || title}/details/${c.id}`}
+          className="w-[25vh] mr-[5%] relative mb-[5%]"
+        >
           <img
             className="h-[40vh] object-cover shadown-[8px_17px_38px_2px_rgba(0,0,0,0.5)]"
-            src={`https://image.tmdb.org/t/p/original/${
+            src={
               c.backdrop_path || c.poster_path || c.profile_path
-            }`}
+                ? `https://image.tmdb.org/t/p/original/${
+                    c.backdrop_path || c.poster_path || c.profile_path
+                  }`
+                : "no image"
+            }
             alt=""
           />
           <h1 className="text-2xl text-zinc-300 mt-3 font-semibold  ">

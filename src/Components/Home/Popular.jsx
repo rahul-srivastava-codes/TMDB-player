@@ -21,7 +21,7 @@ function Popular() {
   const GetPopular = async () => {
     try {
       const url = `${category}/popular?page=${page}`; // ✅ fixed URL
-      console.log("Fetching:", url); // helpful debug
+
       const { data } = await instance.get(url);
 
       if (data.results && data.results.length > 0) {

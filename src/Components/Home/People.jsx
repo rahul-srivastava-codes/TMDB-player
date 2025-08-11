@@ -21,7 +21,7 @@ function person() {
   const GetPerson = async () => {
     try {
       const url = `/person/${category}?page=${page}`;
-      console.log("Fetching:", url); // helpful debug
+
       const { data } = await instance.get(url);
 
       if (data.results && data.results.length > 0) {
@@ -108,7 +108,7 @@ function person() {
           <h3 style={{ textAlign: "center" }}>&#8593; Release to refresh</h3>
         }
       >
-        <Cards data={person} title={category} />
+        <Cards data={person} title="person" />
       </InfiniteScroll>
     </div>
   ) : (

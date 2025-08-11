@@ -21,7 +21,7 @@ function tv() {
   const GetTv = async () => {
     try {
       const url = `/tv/${category}?page=${page}`;
-      console.log("Fetching:", url); // helpful debug
+
       const { data } = await instance.get(url);
 
       if (data.results && data.results.length > 0) {
@@ -108,7 +108,7 @@ function tv() {
           <h3 style={{ textAlign: "center" }}>&#8593; Release to refresh</h3>
         }
       >
-        <Cards data={tv} title={category} />
+        <Cards data={tv} title="tv" />
       </InfiniteScroll>
     </div>
   ) : (

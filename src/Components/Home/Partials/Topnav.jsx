@@ -40,6 +40,7 @@ function Top_bar() {
       <div className="absolute w-[60%] max-h-[50vh] rounded-lg bg-white top-[95%] left-[7%] overflow-scroll">
         {searches.map((s, i) => (
           <Link
+            to={`/${s.media_type}/details/${s.id}`}
             className="hover:text-black hover:bg-zinc-800 border-b-2 border-zinc-200 text-zinc-600 w-full p-8 duration-300 flex items-center justify-start "
             key={i}
           >

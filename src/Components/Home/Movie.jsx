@@ -21,7 +21,7 @@ function Movie() {
   const GetMovie = async () => {
     try {
       const url = `/movie/${category}?page=${page}`;
-      console.log("Fetching:", url); // helpful debug
+      // helpful debug
       const { data } = await instance.get(url);
 
       if (data.results && data.results.length > 0) {
@@ -103,7 +103,7 @@ function Movie() {
           <h3 style={{ textAlign: "center" }}>&#8593; Release to refresh</h3>
         }
       >
-        <Cards data={movie} title={category} />
+        <Cards data={movie} title="movie" />
       </InfiniteScroll>
     </div>
   ) : (

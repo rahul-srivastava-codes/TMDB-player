@@ -38,7 +38,7 @@ function Home() {
     !wallpaper && GetHeaderWallpaper();
     GetTrending();
   }, [wallpaper, trending, category]);
-  console.log(trending);
+
   return wallpaper && trending ? (
     <>
       <Sidenav />
