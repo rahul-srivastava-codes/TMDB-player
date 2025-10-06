@@ -1,6 +1,6 @@
 import instance from "../../utils/Axios";
-import { loadmovie, removemovie } from "../reducers/MovieSlice";
-// import {  removemovie} from "../reducers/MovieSlice";
+import { loadmovie } from "../reducers/MovieSlice";
+import { removemovie} from "../reducers/MovieSlice";
 
 export const asyncloadmovie = (id) => async (dispatch, getState) => {
   try {
